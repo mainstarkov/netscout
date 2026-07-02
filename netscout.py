@@ -9,9 +9,6 @@ import ssl
 import urllib.request
 from datetime import datetime, timezone
 
-
-# ── Terminal colors ──────────────────────────────────────────────────
-
 class C:
     GRAY    = "\033[90m"
     RED     = "\033[91m"
@@ -29,9 +26,6 @@ class C:
 
 BOX_WIDTH = 60
 
-
-# ── Banner ───────────────────────────────────────────────────────────
-
 BANNER = f"""
 {C.CYAN}{C.BOLD}  ███╗   ██╗███████╗████████╗███████╗ ██████╗ ██████╗ ██╗   ██╗████████╗
   ████╗  ██║██╔════╝╚══██╔══╝██╔════╝██╔════╝██╔═══██╗██║   ██║╚══██╔══╝
@@ -43,9 +37,6 @@ BANNER = f"""
 {C.DIM}  Domain & IP Recon Tool v2.1                   {C.GRAY}by mainstarkov{C.RESET}
 {C.GRAY}  {'─' * BOX_WIDTH}{C.RESET}
 """
-
-
-# ── Box-drawing UI ───────────────────────────────────────────────────
 
 def box_top(title: str, icon: str, color: str):
     w = BOX_WIDTH - 2
@@ -79,9 +70,6 @@ def flag(cc: str) -> str:
     if not cc or len(cc) != 2:
         return "🌐"
     return chr(0x1F1E6 + ord(cc[0]) - ord("A")) + chr(0x1F1E6 + ord(cc[1]) - ord("A"))
-
-
-# ── Network helpers ──────────────────────────────────────────────────
 
 def fetch_json(url: str) -> dict | None:
     try:
@@ -156,9 +144,6 @@ def http_info(domain: str) -> dict | None:
         except Exception:
             continue
     return None
-
-
-# ── Multi-source geolocation ────────────────────────────────────────
 
 GEO_FIELDS = ("source", "country", "cc", "region", "city", "district",
               "zip", "lat", "lon", "tz", "isp", "org", "asn", "proxy", "hosting")
@@ -246,9 +231,6 @@ def spread_km(geos: list[dict]) -> float:
 
 def maps_url(lat: float, lon: float) -> str:
     return f"https://www.google.com/maps?q={lat},{lon}"
-
-
-# ── Scan target ──────────────────────────────────────────────────────
 
 PORTS = {
     21: "FTP", 22: "SSH", 25: "SMTP", 53: "DNS",
@@ -391,9 +373,6 @@ def scan_target(target: str, skip_ports: bool = False):
     print(f"{C.DIM}  Scan completed at {ts}{C.RESET}")
     print(f"{C.GRAY}  {'─' * BOX_WIDTH}{C.RESET}\n")
 
-
-# ── JSON output ──────────────────────────────────────────────────────
-
 def scan_json(targets: list[str], skip_ports: bool = False) -> list[dict]:
     results = []
     for target in targets:
@@ -440,9 +419,6 @@ def scan_json(targets: list[str], skip_ports: bool = False) -> list[dict]:
 
         results.append(entry)
     return results
-
-
-# ── Entry point ──────────────────────────────────────────────────────
 
 def main():
     parser = argparse.ArgumentParser(prog="netscout", description="Domain & IP recon tool")
